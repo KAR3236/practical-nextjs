@@ -3,6 +3,7 @@ import {
   Button,
   CircularProgress,
   Grid,
+  MenuItem,
   Paper,
   TextField,
 } from "@mui/material";
@@ -10,14 +11,13 @@ import { toast } from "react-toastify";
 import Link from "next/link";
 import { useFormik } from "formik";
 import { useRouter } from "next/navigation";
-import { Form } from "./Components/Form";
-import { loginValidation } from "./Validations/userValidation";
+import { Form } from "../Components/Form";
+import { activeUserValidation } from "../Validations/userValidation";
 import { useDispatch, useSelector } from "react-redux";
-import Cookies from "js-cookie";
-import { hideLoader, showLoader } from "./Redux/Slice/loaderSlice";
-import { loginAPI } from "./APIs/userAPIs";
+import { hideLoader, showLoader } from "../Redux/Slice/loaderSlice";
+import { activeUserAPI } from "../APIs/userAPIs";
 
-export default function Home() {
+export default function ActiveUser() {
   const navigate = useRouter();
 
   //Redux
@@ -28,22 +28,18 @@ export default function Home() {
   const formik = useFormik({
     initialValues: {
       email: "",
-      password: "",
+      status: "true",
     },
-    validationSchema: loginValidation,
+    validationSchema: activeUserValidation,
     onSubmit: (values) => {
       dispatch(showLoader());
-      loginAPI(values)
-        .then((loginData: any) => {
-          if (loginData?.data?.statusCode === 200) {
-            Cookies.set("loginToken", loginData?.data?.data?.token, {
-              expires: 1,
-              path: "/",
-            });
-            toast.success(loginData?.data?.message);
-            navigate.push("/dashboard");
+      activeUserAPI(values)
+        .then((activeUserData: any) => {
+          if (activeUserData?.data?.statusCode === 202) {
+            toast.success(activeUserData?.data?.message);
+            navigate.push("/");
           } else {
-            toast.error(loginData?.data?.message);
+            toast.error(activeUserData?.data?.message);
           }
         })
         .catch((error: any) => {
@@ -71,9 +67,9 @@ export default function Home() {
       <Grid container justifyContent="center" alignItems="center">
         <Form onSubmit={formik.handleSubmit}>
           <Grid item xs={12}>
-            <h4 style={{ padding: 20, textAlign: "center", fontSize: 25 }}>
-              Sign In
-            </h4>
+            <h1 style={{ padding: 20, textAlign: "center", fontSize: 25 }}>
+              Active User
+            </h1>
           </Grid>
           <Grid item xs={12}>
             <TextField
@@ -95,19 +91,22 @@ export default function Home() {
           </Grid>
           <Grid item xs={12}>
             <TextField
-              id="password"
-              name="password"
-              type="password"
-              label="password"
-              placeholder="Password"
+              select
+              id="status"
+              name="status"
+              label="Status"
+              helperText="Please select your status"
               style={{ padding: 10 }}
-              value={formik?.values?.password}
+              value={formik?.values?.status}
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
-            />
-            {formik?.touched?.password && formik?.errors?.password ? (
-              <div style={{ color: "red", paddingLeft: 10, paddingBottom: 10 }}>
-                {formik?.errors?.password}
+            >
+              <MenuItem value="true">Active</MenuItem>
+              <MenuItem value="false">Deactive</MenuItem>
+            </TextField>
+            {formik?.touched?.status && formik?.errors?.status ? (
+              <div style={{ color: "red", paddingBottom: 10 }}>
+                {formik?.errors?.status}
               </div>
             ) : null}
           </Grid>
@@ -118,7 +117,7 @@ export default function Home() {
               variant="contained"
               style={{ color: "black" }}
             >
-              {isLoading ? <CircularProgress size={25} /> : "Sign In"}
+              {isLoading ? <CircularProgress size={25} /> : "Submit"}
             </Button>
           </Grid>
           <hr className="my-4"></hr>
@@ -127,20 +126,9 @@ export default function Home() {
             <Link
               className="bg-sky-500 hover:bg-sky-700"
               style={{ padding: 8 }}
-              href="/signup"
+              href="/"
             >
-              Create new account
-            </Link>
-          </Grid>
-          <hr className="my-4"></hr>
-
-          <Grid item xs={12} style={{ textAlign: "center" }}>
-            <Link
-              className="bg-sky-500 hover:bg-sky-700"
-              style={{ padding: 8 }}
-              href="/activeUser"
-            >
-              Active your account
+              Log in
             </Link>
           </Grid>
         </Form>
