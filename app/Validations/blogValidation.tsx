@@ -1,11 +1,12 @@
 import * as Yup from "yup";
+import { constant } from "../Utils/constants";
 
 export const addEditBlogValidation = Yup.object({
   title: Yup.string().required(),
   description: Yup.string().required(),
   publised_date: Yup.string().required(),
   modify_date: Yup.string().required(),
-  status: Yup.string().oneOf(["Publish", "Unpublish"]).required(),
+  status: Yup.string().oneOf([constant.PUBLISH, constant.UNPUBLISH]).required(),
   category: Yup.string().required(),
   author: Yup.string().required(),
 });

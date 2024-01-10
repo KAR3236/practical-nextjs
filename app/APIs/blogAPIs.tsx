@@ -1,5 +1,5 @@
 import Cookies from "js-cookie";
-import { AddEditBlogDataInterface } from "../Services/blogInterface";
+import { AddEditBlogDataInterface } from "../Utils/blogInterface";
 import {
   ADD_BLOG_API,
   DELETE_BLOG_API,

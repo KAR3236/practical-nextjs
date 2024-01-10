@@ -7,6 +7,9 @@ export const ACTIVE_USER_API = "/api/user/activeAccount";
 // Login URL
 export const LOGIN_API = "/api/user/login";
 
+// User URL
+export const VIEW_USER_API = "/api/user/viewUser";
+
 // Blog URLs
 export const ADD_BLOG_API = "/api/blog/addBlog";
 export const LIST_OF_BLOG_API = "/api/blog/listOfBlog";

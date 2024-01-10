@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { hideLoader, showLoader, viewBlog } from "../Redux/Slice/blogSlice";
 import { viewBlogAPI } from "../APIs/blogAPIs";
 import { toast } from "react-toastify";
+import { constant } from "../Utils/constants";
 
 export default function ViewBlog() {
   const searchParams = useSearchParams();
@@ -14,8 +15,7 @@ export default function ViewBlog() {
 
   //Redux
   const dispatch = useDispatch();
-  const isLoading = useSelector((state: any) => state?.blog?.loader);
-  const viewBlogData = useSelector((state: any) => state?.blog?.data);
+  const { loader, data } = useSelector((state: any) => state?.blog);
 
   useEffect(() => {
     dispatch(showLoader());
@@ -34,33 +34,33 @@ export default function ViewBlog() {
       });
   }, []);
 
-  let data;
+  let rows;
 
-  if (isLoading) {
-    data = <CircularProgress size={25} />;
+  if (loader) {
+    rows = <CircularProgress size={25} />;
   } else {
-    data = (
+    rows = (
       <div>
         <p>
-          <b>Title:</b> {viewBlogData.title}
+          <b>{constant.TITLE}:</b> {data?.title}
         </p>
         <p>
-          <b>Description:</b> {viewBlogData.description}
+          <b>{constant.DESCRIPTION}:</b> {data?.description}
         </p>
         <p>
-          <b>Publised Date:</b> {viewBlogData.publised_date}
+          <b>Publised Date:</b> {data?.publised_date}
         </p>
         <p>
-          <b>Modify Date:</b> {viewBlogData.modify_date}
+          <b>Modify Date:</b> {data?.modify_date}
         </p>
         <p>
-          <b>Status:</b> {viewBlogData.status}
+          <b>{constant.STATUS}:</b> {data?.status}
         </p>
         <p>
-          <b>Category:</b> {viewBlogData.category}
+          <b>{constant.CATEGORY}:</b> {data?.category}
         </p>
         <p>
-          <b>Author:</b> {viewBlogData.author}
+          <b>{constant.AUTHOR}:</b> {data?.author}
         </p>
       </div>
     );
@@ -91,7 +91,7 @@ export default function ViewBlog() {
           </Link>
         </Grid>
         <Grid item xs={12} style={{ textAlign: "center" }}>
-          <Box sx={{ height: 200 }}>{data}</Box>
+          <Box sx={{ height: 200 }}>{rows}</Box>
         </Grid>
       </Grid>
     </Paper>

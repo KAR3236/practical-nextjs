@@ -16,13 +16,14 @@ import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
 import { hideLoader, showLoader } from "./Redux/Slice/loaderSlice";
 import { loginAPI } from "./APIs/userAPIs";
+import { constant } from "./Utils/constants";
 
 export default function Home() {
   const navigate = useRouter();
 
   //Redux
   const dispatch = useDispatch();
-  const isLoading = useSelector((state: any) => state?.loader?.loader);
+  const { loader } = useSelector((state: any) => state?.loader);
 
   // Formik for validation and handle event by user
   const formik = useFormik({
@@ -72,15 +73,15 @@ export default function Home() {
         <Form onSubmit={formik.handleSubmit}>
           <Grid item xs={12}>
             <h4 style={{ padding: 20, textAlign: "center", fontSize: 25 }}>
-              Sign In
+              {constant.LOGIN}
             </h4>
           </Grid>
           <Grid item xs={12}>
             <TextField
-              id="email"
-              name="email"
-              type="email"
-              label="email"
+              id={constant.EMAIL}
+              label={constant.EMAIL}
+              name={constant.EMAIL.toLowerCase()}
+              type={constant.EMAIL.toLowerCase()}
               placeholder="name@example.com"
               style={{ padding: 10 }}
               value={formik?.values?.email}
@@ -95,11 +96,11 @@ export default function Home() {
           </Grid>
           <Grid item xs={12}>
             <TextField
-              id="password"
-              name="password"
-              type="password"
-              label="password"
-              placeholder="Password"
+              id={constant.PASSWORD}
+              label={constant.PASSWORD}
+              name={constant.PASSWORD.toLowerCase()}
+              type={constant.PASSWORD.toLowerCase()}
+              placeholder="Enter password"
               style={{ padding: 10 }}
               value={formik?.values?.password}
               onBlur={formik.handleBlur}
@@ -118,7 +119,7 @@ export default function Home() {
               variant="contained"
               style={{ color: "black" }}
             >
-              {isLoading ? <CircularProgress size={25} /> : "Sign In"}
+              {loader ? <CircularProgress size={25} /> : constant.LOGIN}
             </Button>
           </Grid>
           <hr className="my-4"></hr>
@@ -129,7 +130,7 @@ export default function Home() {
               style={{ padding: 8 }}
               href="/signup"
             >
-              Create new account
+              {constant.CREATE_ACCOUNT}
             </Link>
           </Grid>
           <hr className="my-4"></hr>
@@ -140,7 +141,7 @@ export default function Home() {
               style={{ padding: 8 }}
               href="/activeUser"
             >
-              Active your account
+              {constant.ACTIVE_ACCOUNT}
             </Link>
           </Grid>
         </Form>

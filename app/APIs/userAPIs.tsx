@@ -2,9 +2,17 @@ import {
   ActiveUserInterface,
   LoginDataInterface,
   RegisterDataInterface,
-} from "../Services/userInterface";
-import { ACTIVE_USER_API, LOGIN_API, REGISTRATION_API } from "./APIs";
+} from "../Utils/userInterface";
+import {
+  ACTIVE_USER_API,
+  VIEW_USER_API,
+  LOGIN_API,
+  REGISTRATION_API,
+} from "./APIs";
 import { baseURL } from "./baseUrl";
+import Cookies from "js-cookie";
+
+const token = Cookies.get("loginToken");
 
 export async function registrationAPI(data: RegisterDataInterface) {
   return await baseURL.post(REGISTRATION_API, data);
@@ -16,4 +24,12 @@ export async function activeUserAPI(data: ActiveUserInterface) {
 
 export async function loginAPI(data: LoginDataInterface) {
   return await baseURL.post(LOGIN_API, data);
+}
+
+export async function viewUserAPI() {
+  return await baseURL.get(VIEW_USER_API, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 }

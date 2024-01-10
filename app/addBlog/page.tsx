@@ -16,13 +16,14 @@ import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { hideLoader, listOfBlog, showLoader } from "../Redux/Slice/blogSlice";
 import { addBlogAPI, listOfBlogAPI } from "../APIs/blogAPIs";
+import { constant } from "../Utils/constants";
 
 export default function AddBlog() {
   const navigate = useRouter();
 
   //Redux
   const dispatch = useDispatch();
-  const isLoading = useSelector((state: any) => state?.loader?.loader);
+  const { loader } = useSelector((state: any) => state?.loader);
 
   // Formik for validation and handle event by user
   const formik = useFormik({
@@ -78,15 +79,15 @@ export default function AddBlog() {
         <Form onSubmit={formik.handleSubmit}>
           <Grid item xs={12}>
             <h1 style={{ padding: 20, textAlign: "center", fontSize: 25 }}>
-              Create new blog
+              {constant.CREATE_BLOG}
             </h1>
           </Grid>
           <Grid item xs={12}>
             <TextField
-              id="title"
-              name="title"
-              type="title"
-              label="Title"
+              id={constant.TITLE}
+              label={constant.TITLE}
+              name={constant.TITLE.toLowerCase()}
+              type="text"
               placeholder="Blog 1"
               style={{ padding: 10 }}
               value={formik?.values?.title}
@@ -101,10 +102,10 @@ export default function AddBlog() {
           </Grid>
           <Grid item xs={12}>
             <TextField
-              id="description"
-              name="description"
-              type="description"
-              label="Description"
+              id={constant.DESCRIPTION}
+              label={constant.DESCRIPTION}
+              name={constant.DESCRIPTION.toLowerCase()}
+              type="text"
               placeholder="Enter description"
               style={{ padding: 10 }}
               value={formik?.values?.description}
@@ -119,10 +120,10 @@ export default function AddBlog() {
           </Grid>
           <Grid item xs={12}>
             <TextField
+              id={constant.PUBLISED_DATE}
+              label={constant.PUBLISED_DATE}
               type="date"
               name="publised_date"
-              id="publised_date"
-              label="Publised Date"
               InputLabelProps={{
                 shrink: true,
               }}
@@ -139,10 +140,10 @@ export default function AddBlog() {
           </Grid>
           <Grid item xs={12}>
             <TextField
+              id={constant.MODIFY_DATE}
+              label={constant.MODIFY_DATE}
               type="date"
               name="modify_date"
-              id="modify_date"
-              label="Publised Date"
               InputLabelProps={{
                 shrink: true,
               }}
@@ -160,17 +161,19 @@ export default function AddBlog() {
           <Grid item xs={12}>
             <TextField
               select
-              id="status"
-              name="status"
-              label="Status"
+              id={constant.STATUS}
+              label={constant.STATUS}
+              name={constant.STATUS.toLowerCase()}
               helperText="Please select your status"
               style={{ padding: 10 }}
               value={formik?.values?.status}
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
             >
-              <MenuItem value="Publish">Publish</MenuItem>
-              <MenuItem value="Unpublish">Unpublish</MenuItem>
+              <MenuItem value={constant.PUBLISH}>{constant.PUBLISH}</MenuItem>
+              <MenuItem value={constant.UNPUBLISH}>
+                {constant.UNPUBLISH}
+              </MenuItem>
             </TextField>
             {formik?.touched?.status && formik?.errors?.status ? (
               <div style={{ color: "red", paddingLeft: 10, paddingBottom: 10 }}>
@@ -180,10 +183,10 @@ export default function AddBlog() {
           </Grid>
           <Grid item xs={12}>
             <TextField
-              id="category"
-              name="category"
-              type="category"
-              label="category"
+              id={constant.CATEGORY}
+              label={constant.CATEGORY}
+              name={constant.CATEGORY.toLowerCase()}
+              type="text"
               placeholder="Enter category"
               style={{ padding: 10 }}
               value={formik?.values?.category}
@@ -198,10 +201,10 @@ export default function AddBlog() {
           </Grid>
           <Grid item xs={12}>
             <TextField
-              id="author"
-              name="author"
-              type="author"
-              label="author"
+              id={constant.AUTHOR}
+              label={constant.AUTHOR}
+              name={constant.AUTHOR.toLowerCase()}
+              type="text"
               placeholder="Enter author"
               style={{ padding: 10 }}
               value={formik?.values?.author}
@@ -220,7 +223,7 @@ export default function AddBlog() {
               variant="contained"
               style={{ color: "black" }}
             >
-              {isLoading ? <CircularProgress size={25} /> : "Add"}
+              {loader ? <CircularProgress size={25} /> : "Add"}
             </Button>
           </Grid>
           <hr className="my-4"></hr>
@@ -231,7 +234,7 @@ export default function AddBlog() {
               className="bg-indigo-500 hover:bg-indigo-700"
               style={{ color: "white", padding: 8 }}
             >
-              Back
+              {constant.BACK}
             </Link>
           </Grid>
         </Form>

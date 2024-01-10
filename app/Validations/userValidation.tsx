@@ -1,4 +1,5 @@
 import * as Yup from "yup";
+import { constant } from "../Utils/constants";
 
 export const loginValidation = Yup.object({
   email: Yup.string().email().required(),
@@ -17,7 +18,7 @@ export const registrationValidation = Yup.object({
   first_name: Yup.string().required(),
   last_name: Yup.string().required(),
   dob: Yup.string().required(),
-  role: Yup.string().oneOf(["Admin", "User"]).required(),
+  role: Yup.string().oneOf([constant.ADMIN, constant.USER]).required(),
 });
 
 export const activeUserValidation = Yup.object({

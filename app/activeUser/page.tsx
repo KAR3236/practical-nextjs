@@ -16,13 +16,14 @@ import { activeUserValidation } from "../Validations/userValidation";
 import { useDispatch, useSelector } from "react-redux";
 import { hideLoader, showLoader } from "../Redux/Slice/loaderSlice";
 import { activeUserAPI } from "../APIs/userAPIs";
+import { constant } from "../Utils/constants";
 
 export default function ActiveUser() {
   const navigate = useRouter();
 
   //Redux
   const dispatch = useDispatch();
-  const isLoading = useSelector((state: any) => state?.loader?.loader);
+  const { loader } = useSelector((state: any) => state?.loader);
 
   // Formik for validation and handle event by user
   const formik = useFormik({
@@ -68,15 +69,15 @@ export default function ActiveUser() {
         <Form onSubmit={formik.handleSubmit}>
           <Grid item xs={12}>
             <h1 style={{ padding: 20, textAlign: "center", fontSize: 25 }}>
-              Active User
+              {constant.ACTIVE_ACCOUNT}
             </h1>
           </Grid>
           <Grid item xs={12}>
             <TextField
-              id="email"
-              name="email"
-              type="email"
-              label="email"
+              id={constant.EMAIL}
+              label={constant.EMAIL}
+              type={constant.EMAIL.toLowerCase()}
+              name={constant.EMAIL.toLowerCase()}
               placeholder="name@example.com"
               style={{ padding: 10 }}
               value={formik?.values?.email}
@@ -92,17 +93,17 @@ export default function ActiveUser() {
           <Grid item xs={12}>
             <TextField
               select
-              id="status"
-              name="status"
-              label="Status"
+              id={constant.STATUS}
+              label={constant.STATUS}
+              name={constant.STATUS.toLowerCase()}
               helperText="Please select your status"
               style={{ padding: 10 }}
               value={formik?.values?.status}
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
             >
-              <MenuItem value="true">Active</MenuItem>
-              <MenuItem value="false">Deactive</MenuItem>
+              <MenuItem value="true">{constant.ACTIVE}</MenuItem>
+              <MenuItem value="false">{constant.DEACTIVE}</MenuItem>
             </TextField>
             {formik?.touched?.status && formik?.errors?.status ? (
               <div style={{ color: "red", paddingBottom: 10 }}>
@@ -117,7 +118,7 @@ export default function ActiveUser() {
               variant="contained"
               style={{ color: "black" }}
             >
-              {isLoading ? <CircularProgress size={25} /> : "Submit"}
+              {loader ? <CircularProgress size={25} /> : constant.SUBMIT}
             </Button>
           </Grid>
           <hr className="my-4"></hr>
@@ -128,7 +129,7 @@ export default function ActiveUser() {
               style={{ padding: 8 }}
               href="/"
             >
-              Log in
+              {constant.LOGIN}
             </Link>
           </Grid>
         </Form>
