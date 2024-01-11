@@ -33,7 +33,7 @@ export default function Dashboard() {
           dispatch(viewUser(viewUserData?.data?.data));
         }
       })
-      .catch((error) => {
+      .catch((error: any) => {
         toast.error(error?.response?.data?.message);
       });
   };
@@ -61,7 +61,7 @@ export default function Dashboard() {
   }, []);
 
   function handleDelete(id: number) {
-    const confirm = window.confirm("Are you sure you want to delete?");
+    const confirm: boolean = window.confirm("Are you sure you want to delete?");
     if (confirm) {
       deleteBlogAPI(id)
         .then((blogData: any) => {
@@ -90,7 +90,7 @@ export default function Dashboard() {
   }
 
   const handleLogout = () => {
-    const confirm = window.confirm("Are you sure you want to logout?");
+    const confirm: boolean = window.confirm("Are you sure you want to logout?");
     if (confirm) {
       dispatch(viewUser({}));
       dispatch(listOfBlog([]));

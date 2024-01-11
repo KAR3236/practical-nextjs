@@ -1,4 +1,4 @@
-import Cookies from "js-cookie";
+import { getToken } from "../Helper/getToken";
 import { AddEditBlogDataInterface } from "../Utils/blogInterface";
 import {
   ADD_BLOG_API,
@@ -9,12 +9,10 @@ import {
 } from "./APIs";
 import { baseURL } from "./baseUrl";
 
-const token = Cookies.get("loginToken");
-
 export async function addBlogAPI(data: AddEditBlogDataInterface) {
   return await baseURL.post(ADD_BLOG_API, data, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${getToken("loginToken")}`,
     },
   });
 }
@@ -22,7 +20,7 @@ export async function addBlogAPI(data: AddEditBlogDataInterface) {
 export async function listOfBlogAPI() {
   return await baseURL.get(LIST_OF_BLOG_API, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${getToken("loginToken")}`,
     },
   });
 }
@@ -30,7 +28,7 @@ export async function listOfBlogAPI() {
 export async function viewBlogAPI(id: string | null) {
   return await baseURL.get(`${VIEW_BLOG_API}/${id}`, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${getToken("loginToken")}`,
     },
   });
 }
@@ -41,7 +39,7 @@ export async function editBlogAPI(
 ) {
   return await baseURL.put(`${EDIT_BLOG_API}/${id}`, data, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${getToken("loginToken")}`,
     },
   });
 }
@@ -49,7 +47,7 @@ export async function editBlogAPI(
 export async function deleteBlogAPI(id: number) {
   return await baseURL.delete(`${DELETE_BLOG_API}/${id}`, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${getToken("loginToken")}`,
     },
   });
 }
