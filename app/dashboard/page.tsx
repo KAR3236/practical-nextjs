@@ -13,7 +13,7 @@ import {
   viewBlog,
 } from "../Redux/Slice/blogSlice";
 import { deleteBlogAPI, listOfBlogAPI } from "../APIs/blogAPIs";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { toast } from "react-toastify";
 import { viewUserAPI } from "../APIs/userAPIs";
 import { viewUser } from "../Redux/Slice/userSlice";
@@ -54,7 +54,6 @@ export default function Dashboard() {
   };
 
   useEffect(() => {
-    // window.location.reload();
     fetchDataFromApi();
     dispatch(showLoader());
     fetchBlogDataFromApi();
@@ -141,7 +140,7 @@ export default function Dashboard() {
         headerName: constant.ACTIONS,
         width: 200,
         renderCell: (params: GridCellParams) => [
-          <>
+          <React.Fragment key={params.row.id}>
             <Link
               className="bg-sky-500 hover:bg-sky-700"
               style={{ padding: 8 }}
@@ -174,7 +173,7 @@ export default function Dashboard() {
             >
               Delete
             </Button>
-          </>,
+          </React.Fragment>,
         ],
       },
     ];
@@ -286,13 +285,7 @@ export default function Dashboard() {
             </Box>
           ) : (
             <Box sx={{ height: 400, width: "100%" }}>
-              <DataGrid
-                rows={datas}
-                columns={columns}
-                getRowId={(row) => {
-                  return row.id;
-                }}
-              />
+              <DataGrid rows={datas} columns={columns} />
             </Box>
           )}
         </Grid>
