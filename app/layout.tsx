@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="crud icon" href="/static/CRUD-Logo.png" />
+        <link rel="crud icon" href="/static/favicon.ico" />
       </head>
       <body className={inter.className}>
         <Providers>
