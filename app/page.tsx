@@ -1,5 +1,6 @@
 "use client";
 import {
+  Box,
   Button,
   CircularProgress,
   Grid,
@@ -61,91 +62,104 @@ export default function Home() {
   });
 
   return (
-    <Paper
+    <Box
       sx={{
-        p: 2,
-        margin: "auto",
-        maxWidth: 500,
-        flexGrow: 1,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "90vh", // Full viewport height
       }}
     >
-      <Grid container justifyContent="center" alignItems="center">
-        <Form onSubmit={formik.handleSubmit}>
-          <Grid item xs={12}>
-            <h4 style={{ padding: 20, textAlign: "center", fontSize: 25 }}>
-              {constant.LOGIN}
-            </h4>
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              id={constant.EMAIL}
-              label={constant.EMAIL}
-              name={constant.EMAIL.toLowerCase()}
-              type={constant.EMAIL.toLowerCase()}
-              placeholder="name@example.com"
-              style={{ padding: 10 }}
-              value={formik?.values?.email}
-              onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
-            />
-            {formik?.touched?.email && formik?.errors?.email ? (
-              <div style={{ color: "red", paddingLeft: 10, paddingBottom: 10 }}>
-                {formik?.errors?.email}
-              </div>
-            ) : null}
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              id={constant.PASSWORD}
-              label={constant.PASSWORD}
-              name={constant.PASSWORD.toLowerCase()}
-              type={constant.PASSWORD.toLowerCase()}
-              placeholder="Enter password"
-              style={{ padding: 10 }}
-              value={formik?.values?.password}
-              onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
-            />
-            {formik?.touched?.password && formik?.errors?.password ? (
-              <div style={{ color: "red", paddingLeft: 10, paddingBottom: 10 }}>
-                {formik?.errors?.password}
-              </div>
-            ) : null}
-          </Grid>
+      <Paper
+        sx={{
+          p: 2,
+          margin: "auto",
+          maxWidth: 500,
+          flexGrow: 1,
+        }}
+      >
+        <Grid container justifyContent="center" alignItems="center">
+          <Form onSubmit={formik.handleSubmit}>
+            <Grid item xs={12}>
+              <h4 style={{ padding: 20, textAlign: "center", fontSize: 25 }}>
+                {constant.LOGIN}
+              </h4>
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                id={constant.EMAIL}
+                label={constant.EMAIL}
+                name={constant.EMAIL.toLowerCase()}
+                type={constant.EMAIL.toLowerCase()}
+                placeholder="name@example.com"
+                style={{ padding: 10 }}
+                value={formik?.values?.email}
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
+              />
+              {formik?.touched?.email && formik?.errors?.email ? (
+                <div
+                  style={{ color: "red", paddingLeft: 10, paddingBottom: 10 }}
+                >
+                  {formik?.errors?.email}
+                </div>
+              ) : null}
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                id={constant.PASSWORD}
+                label={constant.PASSWORD}
+                name={constant.PASSWORD.toLowerCase()}
+                type={constant.PASSWORD.toLowerCase()}
+                placeholder="Enter password"
+                style={{ padding: 10 }}
+                value={formik?.values?.password}
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
+              />
+              {formik?.touched?.password && formik?.errors?.password ? (
+                <div
+                  style={{ color: "red", paddingLeft: 10, paddingBottom: 10 }}
+                >
+                  {formik?.errors?.password}
+                </div>
+              ) : null}
+            </Grid>
 
-          <Grid item xs={12} style={{ textAlign: "center" }}>
-            <Button
-              type="submit"
-              variant="contained"
-              style={{ color: "black" }}
-            >
-              {loader ? <CircularProgress size={25} /> : constant.LOGIN}
-            </Button>
-          </Grid>
-          <hr className="my-4"></hr>
+            <Grid item xs={12} style={{ textAlign: "center" }}>
+              <Button
+                type="submit"
+                variant="contained"
+                style={{ color: "black" }}
+              >
+                {loader ? <CircularProgress size={25} /> : constant.LOGIN}
+              </Button>
+            </Grid>
+            <hr className="my-4"></hr>
 
-          <Grid item xs={12} style={{ textAlign: "center" }}>
-            <Link
-              className="bg-sky-500 hover:bg-sky-700"
-              style={{ padding: 8 }}
-              href="/signup"
-            >
-              {constant.CREATE_ACCOUNT}
-            </Link>
-          </Grid>
-          <hr className="my-4"></hr>
+            <Grid item xs={12} style={{ textAlign: "center" }}>
+              <Link
+                className="bg-sky-500 hover:bg-sky-700"
+                style={{ padding: 8 }}
+                href="/signup"
+              >
+                {constant.CREATE_ACCOUNT}
+              </Link>
+            </Grid>
+            <hr className="my-4"></hr>
 
-          <Grid item xs={12} style={{ textAlign: "center" }}>
-            <Link
-              className="bg-sky-500 hover:bg-sky-700"
-              style={{ padding: 8 }}
-              href="/activeUser"
-            >
-              {constant.ACTIVE_ACCOUNT}
-            </Link>
-          </Grid>
-        </Form>
-      </Grid>
-    </Paper>
+            <Grid item xs={12} style={{ textAlign: "center" }}>
+              <Link
+                className="bg-sky-500 hover:bg-sky-700"
+                style={{ padding: 8 }}
+                href="/activeUser"
+              >
+                {constant.ACTIVE_ACCOUNT}
+              </Link>
+            </Grid>
+          </Form>
+        </Grid>
+      </Paper>
+    </Box>
   );
 }
